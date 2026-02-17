@@ -1,0 +1,516 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Guide Note</title>
+
+  <!-- 明るい「白 × 青」デザインCSS（統合版） -->
+  <style>
+    :root{
+      --bg:#ffffff;
+      --card:#ffffff;
+      --text:#1f2937;
+      --muted:#6b7280;
+      --primary:#1e90ff;      /* メインブルー */
+      --primary-soft:#eaf4ff; /* 薄いブルー背景 */
+      --line:#dbeafe;
+      --accent:#00bcd4;       /* サブアクセント */
+      --warn:#ff9800;
+      --ok:#16a34a;
+      --ng:#dc2626;
+    }
+
+    *{box-sizing:border-box}
+
+    body{
+      margin:0;
+      font-family: "Helvetica Neue", "Segoe UI", "Noto Sans JP", system-ui, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.55;
+    }
+
+    header{
+      padding:22px 20px;
+      background:linear-gradient(90deg, var(--primary), #3bb6ff);
+      color:#fff;
+    }
+
+    .wrap{max-width:1100px; margin:0 auto;}
+    header h1{margin:0; font-size:22px; font-weight:800;}
+    .sub{
+      margin-top:10px;
+      font-size:13px;
+      opacity:0.95;
+      display:flex; gap:10px; flex-wrap:wrap;
+    }
+    .pill{
+      background:rgba(255,255,255,.18);
+      border:1px solid rgba(255,255,255,.25);
+      padding:5px 10px;
+      border-radius:999px;
+      font-size:12px;
+      white-space:nowrap;
+    }
+
+    main{max-width:1100px; margin:26px auto; padding:0 20px;}
+
+    .grid{display:grid; gap:16px;}
+    @media(min-width:980px){ .grid{grid-template-columns: 1.2fr .8fr;} }
+
+    section.card{
+      background:var(--card);
+      border-radius:14px;
+      padding:20px;
+      border:1px solid var(--line);
+      box-shadow:0 6px 18px rgba(30,144,255,0.08);
+    }
+
+    section.card h2{
+      margin:0 0 12px;
+      font-size:18px;
+      color:var(--primary);
+      border-left:5px solid var(--primary);
+      padding-left:10px;
+    }
+
+    .muted{color:var(--muted)}
+    .hr{height:1px; background:var(--line); margin:14px 0;}
+
+    .k{display:flex; flex-wrap:wrap; gap:8px; margin-top:10px}
+    .tag{
+      display:inline-block;
+      background:var(--primary-soft);
+      color:var(--primary);
+      padding:5px 12px;
+      border-radius:999px;
+      font-size:12px;
+      border:1px solid var(--line);
+    }
+
+    .hero{
+      border:1px dashed var(--line);
+      border-radius:14px;
+      overflow:hidden;
+      background:var(--primary-soft);
+    }
+    .hero img{width:100%; height:auto; display:block}
+    .hero .cap{padding:10px 12px; font-size:12px; color:var(--muted);}
+
+    .callout{
+      background:var(--primary-soft);
+      border-left:5px solid var(--accent);
+      padding:12px 14px;
+      border-radius:10px;
+    }
+    .warn{
+      background:#fff8e1;
+      border-left:5px solid var(--warn);
+      padding:12px 14px;
+      border-radius:10px;
+    }
+
+    .row{display:flex; gap:12px; flex-wrap:wrap}
+    .col{flex:1; min-width:260px}
+
+    table{width:100%; border-collapse:collapse; margin-top:10px; font-size:14px;}
+    th{background:var(--primary-soft); text-align:left; padding:10px; border:1px solid var(--line);}
+    td{padding:10px; border:1px solid var(--line);}
+    .price{font-weight:800; color:var(--primary);}
+
+    .ok{color:var(--ok); font-weight:800}
+    .ng{color:var(--ng); font-weight:800}
+
+    details{
+      border:1px solid var(--line);
+      border-radius:12px;
+      padding:10px 12px;
+      background:#fff;
+      margin-top:10px;
+    }
+    summary{cursor:pointer; font-weight:800; color:var(--text)}
+    ul{margin:8px 0 0 18px}
+
+    .slides{display:grid; gap:10px}
+    .slide{
+      background:var(--primary-soft);
+      padding:16px;
+      border-radius:12px;
+      border:1px solid var(--line);
+    }
+    .slide h3{margin:0 0 8px; color:var(--primary); font-size:15px}
+
+    a{color:var(--primary); text-decoration:none; font-weight:700}
+    a:hover{text-decoration:underline}
+    .mini{font-size:12px; color:var(--muted)}
+    code{background:#f1f5f9; padding:2px 6px; border-radius:8px; border:1px solid #e2e8f0}
+  </style>
+</head>
+
+<body>
+<header>
+  <div class="wrap">
+    <h1 id="tourTitle">Guide Note</h1>
+    <div class="sub" id="tourPills"></div>
+  </div>
+</header>
+
+<main>
+  <div class="grid">
+
+    <!-- LEFT -->
+    <div>
+
+      <section class="card">
+        <h2>0. ツアーの顔（写真＋一言）</h2>
+
+        <div class="hero">
+          <img id="heroImg" src="" alt="Hero image" />
+          <div class="cap" id="heroCap"></div>
+        </div>
+
+        <div class="hr"></div>
+
+        <div class="callout">
+          <b>30秒導入（ガイド用台本 / EN）</b><br/>
+          <span class="muted" id="intro30s"></span>
+        </div>
+
+        <div class="k" id="tags"></div>
+      </section>
+
+      <section class="card">
+        <h2>1. タリフ（Net Rate）</h2>
+
+        <table>
+          <thead>
+            <tr>
+              <th>人数</th>
+              <th>料金（Net）</th>
+              <th>1名あたり</th>
+            </tr>
+          </thead>
+          <tbody id="tariffRows"></tbody>
+        </table>
+
+        <div class="hr"></div>
+
+        <div class="row">
+          <div class="col">
+            <div class="ok">✓ Included</div>
+            <ul class="muted" id="included"></ul>
+          </div>
+          <div class="col">
+            <div class="ng">✗ Not Included</div>
+            <ul class="muted" id="notIncluded"></ul>
+          </div>
+        </div>
+
+        <div class="hr"></div>
+
+        <div class="warn">
+          <b>Weather note（雨天時）</b><br/>
+          <span class="muted" id="weatherNote"></span>
+        </div>
+
+        <div class="hr"></div>
+
+        <b>Cancellation policy</b>
+        <div class="muted" id="cancelPolicy"></div>
+      </section>
+
+      <section class="card">
+        <h2>2. 行程（AM / PM）</h2>
+
+        <details open>
+          <summary id="amTitle">Morning course</summary>
+          <table>
+            <thead>
+              <tr><th>Time</th><th>Stop</th><th>Guide focus（話すポイント）</th></tr>
+            </thead>
+            <tbody id="amRows"></tbody>
+          </table>
+        </details>
+
+        <details>
+          <summary id="pmTitle">Afternoon course</summary>
+          <table>
+            <thead>
+              <tr><th>Time</th><th>Stop</th><th>Guide focus（話すポイント）</th></tr>
+            </thead>
+            <tbody id="pmRows"></tbody>
+          </table>
+        </details>
+
+        <div class="hr"></div>
+
+        <div class="callout">
+          <b>Tea break 運用メモ</b><br/>
+          <span class="muted" id="teaMemo"></span>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>3. SATOKAWA / GIAHS を短く正しく</h2>
+
+        <div class="row">
+          <div class="col">
+            <b>Core message（短く / EN）</b>
+            <p class="muted" id="satokawaCore"></p>
+          </div>
+          <div class="col">
+            <b>GIAHS（補足 / EN）</b>
+            <p class="muted" id="giahs"></p>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>4. ルートの見どころ（そのまま読める短文）</h2>
+
+        <ul class="muted" id="highlights"></ul>
+
+        <div class="hr"></div>
+
+        <details>
+          <summary>写真差し込み欄（指差し解説用）</summary>
+          <ul class="muted" id="photoSlots"></ul>
+        </details>
+      </section>
+
+    </div>
+
+    <!-- RIGHT -->
+    <div>
+
+      <section class="card">
+        <h2>Meeting Point（集合場所）</h2>
+
+        <div class="callout">
+          <b>Google Maps</b><br/>
+          <a id="mapLink" href="#" target="_blank" rel="noopener">Open in Google Maps</a>
+          <div class="mini">※ガイドは、開始前に「場所名」を必ず口頭で確認。</div>
+        </div>
+
+        <div class="hr"></div>
+
+        <b>Place name</b>
+        <div class="muted" id="meetName"></div>
+
+        <div class="hr"></div>
+
+        <b>Address</b>
+        <div class="muted" id="meetAddr"></div>
+
+        <div class="hr"></div>
+
+        <b>On-site landmark（目印）</b>
+        <ul class="muted" id="meetLandmarks"></ul>
+
+        <div class="hr"></div>
+
+        <b>集合時の一言（EN）</b>
+        <div class="muted" id="meetScript"></div>
+      </section>
+
+      <section class="card">
+        <h2>5. 安全・注意（必ず読む）</h2>
+
+        <div class="warn">
+          <b>Important notes（口頭で必ず伝える / EN）</b>
+          <ul class="muted" id="safetyNotes"></ul>
+        </div>
+
+        <div class="hr"></div>
+
+        <details open>
+          <summary>⚠️ Route hazard callouts（要・現場で強調）</summary>
+          <ul class="muted" id="hazards"></ul>
+          <div class="mini">※ここに「注意箇所の写真」や「簡易地図スクショ」を入れると事故が減ります。</div>
+        </details>
+      </section>
+
+      <section class="card">
+        <h2>6. 導入用フリップ（HTML版）</h2>
+        <div class="slides" id="flipSlides"></div>
+      </section>
+
+      <section class="card">
+        <h2>7. オペレーション（社内向けメモ欄）</h2>
+        <ul class="muted" id="ops"></ul>
+      </section>
+
+    </div>
+  </div>
+</main>
+
+<script>
+/** あなたのWebアプリURL（すでにOK） */
+const SHEET_API_URL = "https://script.google.com/macros/s/AKfycbwX6z6FJrj1kaZwD2yaPJHNM9oU8gVdCy9L-zA0JlgX2ocVAY-mVCh7Wtg15rzZCd4pCg/exec";
+
+const $ = (id) => document.getElementById(id);
+
+function setText(id, text){ $(id).textContent = text ?? ""; }
+function setHTML(id, html){ $(id).innerHTML = html ?? ""; }
+
+function renderPills(items){
+  const el = $("tourPills");
+  el.innerHTML = "";
+  (items || []).forEach(t=>{
+    const s = document.createElement("span");
+    s.className = "pill";
+    s.textContent = t;
+    el.appendChild(s);
+  });
+}
+
+function renderTags(items){
+  const el = $("tags");
+  el.innerHTML = "";
+  (items || []).forEach(t=>{
+    const s = document.createElement("span");
+    s.className = "tag";
+    s.textContent = t;
+    el.appendChild(s);
+  });
+}
+
+function renderTariff(rows){
+  const tb = $("tariffRows");
+  tb.innerHTML = "";
+  (rows || []).forEach(r=>{
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${r.people ?? ""}</td>
+      <td class="price">${r.net ?? ""}</td>
+      <td>${r.per ?? ""}</td>
+    `;
+    tb.appendChild(tr);
+  });
+}
+
+function renderList(ulId, items, asHTML=false){
+  const ul = $(ulId);
+  ul.innerHTML = "";
+  (items || []).forEach(it=>{
+    const li = document.createElement("li");
+    if (asHTML) li.innerHTML = it;
+    else li.textContent = it;
+    ul.appendChild(li);
+  });
+}
+
+function renderItinerary(tbodyId, rows){
+  const tb = $(tbodyId);
+  tb.innerHTML = "";
+  (rows || []).forEach(r=>{
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${r.time ?? ""}</td>
+      <td>${r.stop ?? ""}</td>
+      <td>${r.focus ?? ""}</td>
+    `;
+    tb.appendChild(tr);
+  });
+}
+
+function renderFlips(flips){
+  const wrap = $("flipSlides");
+  wrap.innerHTML = "";
+  (flips || []).forEach(f=>{
+    const d = document.createElement("div");
+    d.className = "slide";
+    d.innerHTML = `<h3>${f.title ?? ""}</h3><div class="muted">${f.body_html ?? ""}</div>`;
+    wrap.appendChild(d);
+  });
+}
+
+async function loadSheetJSON(){
+  const res = await fetch(SHEET_API_URL, { cache: "no-store" });
+  if(!res.ok) throw new Error("Failed to load JSON: " + res.status);
+  return await res.json();
+}
+
+(async ()=>{
+  try{
+    const data = await loadSheetJSON();
+
+    // title
+    const title = data.title || "Guide Note";
+    document.title = title;
+    setText("tourTitle", title);
+
+    // pills
+    renderPills(data.pills);
+
+    // hero
+    $("heroImg").src = data.hero?.imageUrl || "";
+    $("heroImg").alt = data.hero?.alt || "Hero image";
+    setText("heroCap", data.hero?.caption || "");
+
+    // intro
+    setText("intro30s", data.intro30s || "");
+
+    // tags
+    renderTags(data.tags);
+
+    // tariff / included / notIncluded
+    renderTariff(data.tariff);
+    renderList("included", data.included);
+    renderList("notIncluded", data.notIncluded);
+
+    // weather / cancel
+    setText("weatherNote", data.weatherNote || "");
+    setText("cancelPolicy", data.cancelPolicy || "");
+
+    // itinerary
+    setText("amTitle", data.itinerary?.amTitle || "Morning course");
+    setText("pmTitle", data.itinerary?.pmTitle || "Afternoon course");
+    renderItinerary("amRows", data.itinerary?.am || []);
+    renderItinerary("pmRows", data.itinerary?.pm || []);
+
+    // tea memo
+    setText("teaMemo", data.teaMemo || "");
+
+    // story（※現状Apps Scriptが返していないなら空のまま。必要なら後でタブ追加できます）
+    setText("satokawaCore", data.story?.satokawaCore || "");
+    setText("giahs", data.story?.giahs || "");
+
+    // highlights / photo slots（※同上。返してない場合は空でOK）
+    renderList("highlights", data.highlights || [], true);
+    renderList("photoSlots", data.photoSlots || []);
+
+    // meeting point
+    const mp = data.meetingPoint || {};
+    $("mapLink").href = mp.mapUrl || "#";
+    setText("meetName", mp.name || "");
+    setText("meetAddr", mp.address || "");
+    renderList("meetLandmarks", mp.landmarks || []);
+    setText("meetScript", mp.script || "");
+
+    // safety
+    renderList("safetyNotes", data.safety?.notes || []);
+    renderList("hazards", data.safety?.hazards || []);
+
+    // flips（body_htmlをそのままHTMLとして表示）
+    renderFlips(data.flips || []);
+
+    // ops
+    renderList("ops", data.ops || []);
+
+  }catch(e){
+    console.error(e);
+    document.body.innerHTML =
+      "<div style='font-family:system-ui;padding:24px;color:#1f2937'>" +
+      "<h2>読み込みに失敗しました</h2>" +
+      "<p>WebアプリURL / 公開設定 / タブ名やヘッダーを確認してください。</p>" +
+      "<pre style='background:#f1f5f9;padding:12px;border-radius:10px;white-space:pre-wrap;border:1px solid #e2e8f0'>" +
+      String(e) +
+      "</pre></div>";
+  }
+})();
+</script>
+
+</body>
+</html>
