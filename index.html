@@ -474,12 +474,15 @@ async function loadSheetJSON(){
     setText("teaMemo", data.teaMemo || "");
 
     // story（※現状Apps Scriptが返していないなら空のまま。必要なら後でタブ追加できます）
-    setText("satokawaCore", data.story?.satokawaCore || "");
-    setText("giahs", data.story?.giahs || "");
+    setHTML("satokawaCore", (data.story?.satokawaCore || "").replace(/\\n/g, "\n").replace(/\n/g, "<br/>"));
+    setHTML("giahs", (data.story?.giahs || "").replace(/\\n/g, "\n").replace(/\n/g, "<br/>"));
 
     // highlights / photo slots（※同上。返してない場合は空でOK）
-    renderList("highlights", data.highlights || [], true);
-    renderList("photoSlots", data.photoSlots || []);
+    renderList(
+      "highlights",
+      (data.highlights || []).map(s => (s || "").replace(/\\n/g, "\n").replace(/\n/g, "<br/>")),
+      true // asHTML=true
+    );
 
     // meeting point
     const mp = data.meetingPoint || {};
