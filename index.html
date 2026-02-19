@@ -353,6 +353,12 @@ const $ = (id) => document.getElementById(id);
 
 function setText(id, text){ $(id).textContent = text ?? ""; }
 function setHTML(id, html){ $(id).innerHTML = html ?? ""; }
+function renderMultiline(id, value){
+  const v = (value || "")
+    .replace(/\\n/g, "\n")
+    .replace(/\n/g, "<br/>");
+  setHTML(id, v);
+}
 
 function renderPills(items){
   const el = $("tourPills");
@@ -450,7 +456,7 @@ async function loadSheetJSON(){
     setText("heroCap", data.hero?.caption || "");
 
     // intro
-    setText("intro30s", data.intro30s || "");
+    renderMultiline("intro30s", data.intro30s);
 
     // tags
     renderTags(data.tags);
@@ -461,8 +467,8 @@ async function loadSheetJSON(){
     renderList("notIncluded", data.notIncluded);
 
     // weather / cancel
-    setText("weatherNote", data.weatherNote || "");
-    setText("cancelPolicy", data.cancelPolicy || "");
+    renderMultiline("weatherNote", data.weatherNote);
+    renderMultiline("cancelPolicy", data.cancelPolicy);
 
     // itinerary
     setText("amTitle", data.itinerary?.amTitle || "Morning course");
@@ -471,7 +477,7 @@ async function loadSheetJSON(){
     renderItinerary("pmRows", data.itinerary?.pm || []);
 
     // tea memo
-    setText("teaMemo", data.teaMemo || "");
+    renderMultiline("teaMemo", data.teaMemo);
 
     // story
     setHTML("satokawaCore", (data.story?.satokawaCore || "").replace(/\\n/g, "\n").replace(/\n/g, "<br/>"));
