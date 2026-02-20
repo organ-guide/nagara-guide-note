@@ -490,7 +490,6 @@ async function loadSheetJSON(){
     $("mapLink").href = mp.mapUrl || "#";
     setText("meetName", mp.name || "");
     setText("meetAddr", mp.address || "");
-    renderList("meetLandmarks", mp.landmarks || []);
     setText("meetScript", mp.script || "");
 
     // safety
